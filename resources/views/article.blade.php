@@ -13,7 +13,9 @@
 <a href='/login'>Login to comment</a>
 @else
 @foreach ($article->comments as $comment)
-<img style='max-width: 40px;max-height: 40px' src='{{ url('upload/' . $comment->user->avatar) }}'>{{ $comment->user->email }} : {{ $comment->content }}
+<div>
+    <img style='max-width: 40px;max-height: 40px' src='{{ url('upload/' . $comment->user->avatar) }}'>{{ $comment->user->email }} : {{ $comment->content }}
+</div>
 @endforeach
 
 <form method='post' action='/comment'>

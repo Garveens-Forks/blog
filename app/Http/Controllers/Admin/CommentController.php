@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
+use App\Comment;
+
 class CommentController extends Controller
 {
     /**
@@ -57,9 +59,11 @@ class CommentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
-        //
+        return view('admin/comment', [
+            'comment' => Comment::findOrFail($id),
+        ]);
     }
 
     /**
@@ -71,7 +75,16 @@ class CommentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $comment = Comment::findOrFail($id);
+        if ($comment->user->id != $request->user()->id) {
+            abort(403, 'Unauthorized action.');
+        }
+        $this->validate($request, [
+            'content' => 'required',
+        ]);
+        $comment->content = $request->content;
+        $comment->save();
+        return redirect('admin/comment');
     }
 
     /**
@@ -82,6 +95,7 @@ class CommentController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Comment::findOrFail($id)->delete();
+        return redirect('admin/comment');
     }
 }

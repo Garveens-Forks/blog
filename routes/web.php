@@ -11,12 +11,11 @@
 |
  */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'HomeController@index');
 
 Route::group(['middleware' => 'auth'], function () {
 	Route::post('comment', 'HomeController@comment');
+	Route::get('notification/{id}', 'HomeController@notification');
 
     Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
         Route::get('/', 'ArticleController@index');
@@ -27,6 +26,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('article/destroy/{id}', 'ArticleController@destroy');
 
         Route::get('comment', 'CommentController@index');
+        Route::get('comment/edit/{id}', 'CommentController@edit');
         Route::post('comment/update/{id}', 'CommentController@update');
         Route::post('comment/destroy/{id}', 'CommentController@destroy');
 

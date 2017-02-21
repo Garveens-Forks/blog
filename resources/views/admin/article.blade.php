@@ -20,7 +20,7 @@
                             }
                         @endforeach
                     </select>
-                    <input type='submit' value='提交' class='btn btn-success' />
+                    <input type='submit' value='Submit' class='btn btn-success' />
                 </div>
 
             </form>

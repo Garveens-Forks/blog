@@ -46,6 +46,7 @@
                         @if (!Auth::guest())
                             <li><a href='{{ url('/admin/category/') }}'>Categories</a></li>
                             <li><a href='{{ url('/admin/') }}'>Articles</a></li>
+                            <li><a href='{{ url('/admin/comment/') }}'>Comments</a></li>
                         @endif
                     </ul>
 
@@ -57,6 +58,20 @@
                             <li><a href="{{ route('register') }}">Register</a></li>
                         @else
                             @yield('header')
+
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                    {{ count(Auth::user()->unreadNotifications) }} <span class="caret"></span>
+                                </a>
+
+                                <ul class="dropdown-menu" role="menu">
+                                    @foreach (Auth::user()->unreadNotifications as $notification)
+                                        <a href='{{ url("notification/{$notification->id}") }}'>{{ $notification->data['content'] }}</a>
+                                    @endforeach
+                                </ul>
+                            </li>
+
+
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                     {{ Auth::user()->name }} <span class="caret"></span>
