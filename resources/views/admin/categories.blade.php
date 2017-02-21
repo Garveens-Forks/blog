@@ -7,6 +7,11 @@
 
 @section('content')
 <div class="container">
+@if (session('status'))
+    <div class="alert alert-danger">
+        {{ session('status') }}
+    </div>
+@endif
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
@@ -20,7 +25,7 @@
                             </th>
                         </tr>
                         @foreach ($categories as $category)
-                            <tr class='article'>
+                            <tr>
                                 <td>
                                     {{ $category->id }}
                                 </td>
@@ -28,6 +33,11 @@
                                     {{ $category->name }}
                                 </td>
                                 <td>
+                                    <!-- TODO: javascript it -->
+                                    <form method='post' action='{{ url("admin/category/destroy/{$category->id}") }}' onsubmit='return confirm("Are you sure?")'>
+                                        {{ csrf_field() }}
+                                        <input type='submit' value='Delete' class='btn btn-danger'>
+                                    </form>
                                 </td>
                             </tr>
                         @endforeach

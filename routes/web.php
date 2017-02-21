@@ -32,6 +32,7 @@ Route::group(['middleware' => 'auth'], function () {
 
         Route::get('category', 'CategoryController@index');
         Route::post('category/store', 'CategoryController@store');
+        Route::post('category/destroy/{id}', 'CategoryController@destroy');
 
         Route::get('user', 'UserController@index');
         Route::post('user/update', 'UserController@update');

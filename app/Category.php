@@ -8,7 +8,7 @@ class Category extends Model
 {
     public function articles()
     {
-        return $this->belongsToMany(Category::class);
+        return $this->belongsToMany(Article::class);
     }
 
     public function user()

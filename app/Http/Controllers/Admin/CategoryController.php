@@ -91,6 +91,11 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $category = Category::findOrFail($id);
+        if ($category->articles) {
+            return back()->with('status', 'Category not empty');
+        }
+        $category->delete();
+        return redirect('admin/category');
     }
 }

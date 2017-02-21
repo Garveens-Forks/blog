@@ -111,7 +111,9 @@ class ArticleController extends Controller
      */
     public function destroy($id)
     {
-        Article::findOrFail($id)->delete();
+        $article = Article::findOrFail($id);
+        $article->comments()->delete();
+        $article->delete();
         return redirect('admin');
     }
 }

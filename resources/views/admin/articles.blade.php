@@ -52,11 +52,4 @@
     </div>
 </div>
 
-<script>
-$('.article').click(function(){
-    console.log(1)
-})
-</script>
-
-
 @endsection
