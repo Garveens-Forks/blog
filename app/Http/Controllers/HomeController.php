@@ -21,8 +21,21 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function article($id)
     {
-        return view('home');
+        return view('article', [
+            'article' => \App\article::findOrFail($id)
+        ]);
+    }
+
+    public function comment(Request $request)
+    {
+        $comment = new \App\Comment;
+        $comment->user_id = $request->user()->id;
+        $comment->content = $request->content;
+        $article_id = $request->article_id;
+        $comment->article_id = $article_id;
+        $comment->save();
+        return redirect("article/{$article_id}");
     }
 }

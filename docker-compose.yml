@@ -36,11 +36,12 @@ services:
     command: sh -c "redis-server --protected-mode no"
 
   mysql:
-    image: base
+    image: mysql
     volumes:
       - ./storage/mysql:/var/lib/mysql
     expose:
       - "3306"
+    env_file: .env
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
       MYSQL_DATABASE: ${DB_DATABASE}

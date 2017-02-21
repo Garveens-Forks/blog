@@ -43,7 +43,10 @@
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav">
-                        &nbsp;
+                        @if (!Auth::guest())
+                            <li><a href='{{ url('/admin/category/') }}'>Categories</a></li>
+                            <li><a href='{{ url('/admin/') }}'>Articles</a></li>
+                        @endif
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -53,12 +56,15 @@
                             <li><a href="{{ route('login') }}">Login</a></li>
                             <li><a href="{{ route('register') }}">Register</a></li>
                         @else
+                            @yield('header')
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                     {{ Auth::user()->name }} <span class="caret"></span>
                                 </a>
 
                                 <ul class="dropdown-menu" role="menu">
+                                    <li>
+                                        <a href='{{ url('/admin/user') }}'>Avatar</a>
                                     <li>
                                         <a href="{{ route('logout') }}"
                                             onclick="event.preventDefault();
@@ -77,11 +83,9 @@
                 </div>
             </div>
         </nav>
-
         @yield('content')
     </div>
-
-    <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
+
 </body>
 </html>

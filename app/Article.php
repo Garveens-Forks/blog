@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Article extends Model
 {
@@ -12,7 +13,7 @@ class Article extends Model
 
     public function categories()
     {
-        return $this->belogsToMany(Category::class);
+        return $this->belongsToMany(Category::class);
     }
 
     public function comments()
@@ -22,6 +23,6 @@ class Article extends Model
 
     public function user()
     {
-        return $this->belogsTo(User::class);
+        return $this->belongsTo(User::class);
     }
 }
