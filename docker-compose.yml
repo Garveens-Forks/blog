@@ -1,0 +1,47 @@
+version: '2'
+
+services:
+  nginx:
+    image: base
+    command: sh -c "mkdir -p /tmp/nginx && nginx"
+    ports:
+      - "80:80"
+    volumes_from:
+      - php
+    volumes:
+      - ./config/nginx.conf:/etc/nginx/nginx.conf
+    links:
+      - php
+
+  php:
+    image: base
+    user: www-data
+    command: sh -c "mkdir -p /wwwroot/logs/php-fpm && php-fpm -O -d error_log=/wwwroot/logs/php-fpm/php-fpm.log"
+    expose:
+      - "9000"
+    volumes:
+      - .:/wwwroot
+    links:
+      - redis
+      - mysql
+    expose:
+      - "9000"
+    environment:
+      COMPOSER_CACHE_DIR: /wwwroot/storage/composer
+
+  redis:
+    image: base
+    expose:
+      - "6379"
+    command: sh -c "redis-server --protected-mode no"
+
+  mysql:
+    image: base
+    volumes:
+      - ./storage/mysql:/var/lib/mysql
+    expose:
+      - "3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: ${DB_DATABASE}
+
